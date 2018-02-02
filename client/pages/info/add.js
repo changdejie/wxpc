@@ -76,14 +76,15 @@ Page({
     }
 
     //默认赋给最近的地址
-    that.data.departure =  wx.getStorageSync('startIndex');
-    that.data.destination = this.getData;
+    data.departure = getApp().globalData.destination[wx.getStorageSync('startIndex')];
+    console.log("data.endIndex"+data.endIndex)
+    data.destination = getApp().globalData.destination[data.endIndex];
 
-    if(that.data.departure == '出发地'){
+    if(data.departure == '出发地'){
       util.isError('请选择出发地', that);
       return false;
     }
-    if (that.data.endIndex == '' || that.data.destination == ''){
+    if (data.endIndex == '' || data.destination == ''){
       util.isError('请选择目的地', that);
       return false;
     }
