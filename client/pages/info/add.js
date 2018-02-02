@@ -77,8 +77,7 @@ Page({
 
     //默认赋给最近的地址
     data.departure = getApp().globalData.destination[wx.getStorageSync('startIndex')];
-    console.log("data.endIndex"+data.endIndex)
-    data.destination = getApp().globalData.destination[data.endIndex];
+    data.destination = getApp().globalData.destination[wx.getStorageSync("add_endIndex")];
 
     if(data.departure == '出发地'){
       util.isError('请选择出发地', that);
@@ -129,6 +128,7 @@ Page({
     this.setData({
       'endIndex': e.detail.value
     })
+    wx.setStorageSync("add_endIndex", e.detail.value)
   },
 
   sexDeparture:function(){
