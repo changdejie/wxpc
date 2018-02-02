@@ -38,33 +38,25 @@
         
             <view class="weui-cells__title">填写拼车信息</view>
             <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell weui-cell_input">
-                    <view class="weui-cell__hd">
-                        <view class="weui-label">拼车类型</view>
-                    </view>
-                    <view class="weui-cell__bd">
-                        <radio-group class="radio-group weui-cell weui-check__label" name="type" bindchange="selectType">
-                            <label class="radio" wx:for="{{types}}" wx:key="value">
-                                <radio value="{{item.name}}" checked="{{item.checked}}"/><text>{{item.value}}</text>
-                            </label>
-                        </radio-group>
-                    </view>
-                </view>
                 <view class="weui-cell weui-cell_input StartAndStop">
                     <view class="weui-cell__hd">
                         <view class="weui-label">出发地</view>
                     </view>
-                    <view class="weui-cell__bd">
-                        <view class="weui-input" bindtap="sexDeparture">{{departure}}</view>                 
-                    </view>
+                    <picker mode="selector"   bindchange="selectStart" range="{{destinations}}">
+                      <view class="weui-cell__bd">
+                          <view class="weui-input" >{{destinations[startIndex]}}</view>                 
+                      </view>
+                    </picker>
                 </view>
                 <view class="weui-cell weui-cell_input StartAndStop">
                     <view class="weui-cell__hd">
                         <view class="weui-label">目的地</view>
                     </view>
-                    <view class="weui-cell__bd">
-                        <view class="weui-input stop" bindtap="sexDestination">{{destination}}</view>
-                    </view>
+                    <picker mode="selector"   bindchange="selectEnd" range="{{destinations}}">
+                      <view class="weui-cell__bd">
+                          <view class="weui-input" >{{destinations[endIndex]}}</view>                 
+                      </view>
+                    </picker>
                 </view>
                 <!-- <image src="/img/to.png" class="to1"></image> -->
                         
@@ -117,7 +109,7 @@
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </view>
-                <view class="weui-cell weui-cell_input"  wx:if="{{type == 2}}">
+                <!-- <view class="weui-cell weui-cell_input"  wx:if="{{type == 2}}">
                     <view class="weui-cell__hd">
                         <view class="weui-label">乘车人数</view>
                     </view>
@@ -127,8 +119,31 @@
                         </picker>
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </view>
-            </view>
+                </view> -->
+           
+
+      
+                  <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__bd">
+                        <radio-group class="radio-group weui-cell weui-check__label" name="isAllTypes" bindchange="selectAllTypes">
+                            <label class="radio" wx:for="{{isAllTypes}}" wx:key="value">
+                                <radio value="{{item.name}}" checked="{{item.checked}}"/><text>{{item.value}}</text>
+                            </label>
+                        </radio-group>
+                    </view>
+                </view> 
+
+                <view class="weui-cell weui-cell_input">
+                    <view >
+                        <checkbox-group  name="isAllTypes" bindchange="selectAllTypes">
+                            <label style="display:flex;" wx:for="{{destinations}}" wx:key="value">
+                                <checkbox value="{{item}}" checked="0"/><text>{{item}}</text>
+                            </label>
+                        </checkbox-group>
+                    </view>
+                </view> 
+
+             </view>
             <view class="weui-cells__title">其他信息</view>
             <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">

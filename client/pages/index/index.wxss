@@ -4,7 +4,8 @@
 .dateImg{width: 40rpx;height:40rpx;margin:25rpx 10rpx;}
 .to{width: 60rpx;height:60rpx;margin:20rpx 0rpx;}
 
-.date{font-size: .8rem!important;width: 200rpx!important;}
+.date{font-size: .8rem!important;width: 100rpx!important;}
+.time{font-size: .8rem!important;width: 150rpx!important;}
 
 .page__bd{
     height: 100%;

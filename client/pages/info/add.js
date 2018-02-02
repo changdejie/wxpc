@@ -13,11 +13,15 @@ Page({
     start: minday,
     end:maxday,
     time:'请选择时间',
-    types:[{name: '1', value: '车找人',checked: true},{name: '2', value: '人找车'}],
+    types: [{ name: '1', value: '车找人', checked: true }, { name: '2', value: '人找车' }],
+    isAllTypes: [{ name: '1', value: '所有小区接送', checked: true },{name: '1', value: '排除',checked: true},{name: '3', value: '途径'}],
     Surpluss:['请选择',1,2,3,4,5,6],
     surplus:0,
     isAgree: false,
     vehicle:'',
+    destinations: getApp().globalData.destination,
+    startIndex: 0,
+    endIndex: 0,
     departure:'出发地',
     destination:'目的地'
   },
@@ -106,6 +110,20 @@ Page({
     })
     util.clearError(that);
   },
+
+
+  selectStart: function (e) {
+    this.setData({
+      'startIndex': e.detail.value
+    })
+  },
+
+  selectEnd: function (e) {
+    this.setData({
+      'endIndex': e.detail.value
+    })
+  },
+
   sexDeparture:function(){
     var that = this;
     wx.chooseLocation({

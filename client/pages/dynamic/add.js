@@ -4,9 +4,10 @@ var util = require('../../utils/util.js');
 Page({
     data: {
         files: [],
-        content:'',
+        content: '',
         gender:1
     },
+
   chooseImage: function (e) {
       var that = this;
       wx.chooseImage({

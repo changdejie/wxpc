@@ -90,7 +90,9 @@ App({
     })
   },
   globalData:{
-    userInfo:null,
+    userInfo: null,
+    destination: ["潞城", "英国宫1期", "英国宫2期"],
+    dateStr: ["今天", "明天"],
     sk:null
   }
   

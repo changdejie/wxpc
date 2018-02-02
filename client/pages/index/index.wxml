@@ -2,13 +2,33 @@
  <!--页头-->
  <view class="page__hd">
   <view class="head">
-    <input bindblur="getstart" value="{{start}}" placeholder="始发地" type="text" />
+   <picker mode="selector" name="gender" value="" range="{{destination}}" bindchange="selectStart">
+
+    <view class="picker" >
+      {{destination[startIndex]}}
+    </view>
+     
+  
+    </picker>
+
+    <!-- <input bindblur="getstart" value="{{start}}" placeholder="始发地" type="text" /> -->
     <image src="/img/to.png" class="to"></image>
-    <input bindblur="getover" value="{{over}}" placeholder="目的地" auto-focus/>
-    <image src="/img/date.png" class="dateImg"></image>
-    <picker mode="date" value="{{date}}" class="date" start="{{minday}}" end="{{maxday}}" bindchange="bindDateChange">
+    <!-- <input bindblur="getover" value="{{over}}" placeholder="目的地" auto-focus/> -->
+   <picker mode="selector" name="gender" value="" range="{{destination}}" bindchange="selectEnd">
+    <view class="picker" >
+      {{destination[endIndex]}}
+    </view>
+    </picker>
+
+     <image src="/img/date.png" class="dateImg"></image> 
+    <picker mode="selector" name="dateStr" value="" class="date"  range="{{dateStr}}"bindchange="bindDateChange">
     <view class="picker">
-      {{date}}
+      {{dateStr[dateStrIndex]}}
+    </view>
+  </picker>
+      <picker mode="selector"  class="time" bindchange="bindTimeChange" range="{{timeZoneStr}}">
+    <view class="picker">
+      {{timeZoneStr[timeZoneStrIndex]}}
     </view>
   </picker>
   </view>
@@ -17,12 +37,13 @@
  <view class="page__bd"> 
   <view class="weui-tab">
             <view class="weui-navbar">
-                <block wx:for="{{tabs}}" wx:key="*this">
+      
+                <!-- <block wx:for="{{tabs}}" wx:key="*this">
                     <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
                         <view class="weui-navbar__title">{{item}}</view>
                     </view>
                 </block>
-                <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+                <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view> -->
             </view>
             <view class="weui-tab__panel">
                 <view class="weui-tab__content" hidden="{{activeIndex != 0}}">

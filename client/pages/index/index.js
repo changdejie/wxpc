@@ -14,6 +14,12 @@ var list2 = new Array();
 Page({
   data: {
     all:'act',
+    destination: ["潞城", "英国宫1期", "英国宫2期"],
+    dateStr: ["今天", "明天"],
+    timeZoneStr: ["全部", "最近30分钟", "30-2小时", "2-24小时"],
+    timeZoneStrIndex: 0,
+    dateStrIndex: 0,
+    destinationXY: [[39.9090573776, 116.7540886291], [39.4547575590, 116.3144253176], [39.8792170855, 116.8531464547]],
     date:today,
     minday:today,
     maxday:maxday,
@@ -21,7 +27,9 @@ Page({
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
-    start:'',
+    start: '',
+    endIndex: 0,
+    time: util.formatTime(new Date()).split(' ')[1],
     over:''
   },
   tabClick: function (e) {
@@ -32,13 +40,33 @@ Page({
     },
   bindDateChange:function(e){
     this.setData({
-      date:e.detail.value
+      dateStrIndex: e.detail.value
     })
     this.getList(e.detail.value,this.data.start,this.data.over);
   },
+
+  bindTimeChange: function (e) {
+    this.setData({
+      timeZoneStrIndex: e.detail.value
+    })
+    this.getList(e.detail.value, this.data.start, this.data.over);
+  },
+
+  selectStart: function (e) {
+    this.setData({
+      'startIndex': e.detail.value
+    })
+  },
+
+  selectEnd: function (e) {
+    this.setData({
+      'endIndex': e.detail.value
+    })
+  },
+
   onShareAppMessage: function () {
     return {
-      title: '同城拼车',
+      title: '大厂潞城约车',
       path: 'pages/index/index'
     }
   },
@@ -131,19 +159,51 @@ Page({
     wx.getLocation({
       success: function (res) { 
         var latitude = res.latitude
-        var longitude = res.longitude       
-        wx.request({
-          url: 'https://api.map.baidu.com/geocoder/v2/?ak=zIOkoO8wWrWA22ObIHPNkCgtLZpkP5lE&location=' + latitude + ',' + longitude + '&output=json&pois=0',
-          data: {},
-          method: 'GET', 
-          header: { 'Content-Type': 'application/json' },
-          success: function(res){
-            that.setData({
-              start:res.data.result.addressComponent.city
-            })
-            that.getList(that.data.date,res.data.result.addressComponent.city);
+        var longitude = res.longitude  
+
+        console.info(latitude)
+        console.info(longitude)
+
+        var minlos=10000000
+        //记录循环index
+        var index=0
+        //记录最小 index
+        var minIndex=0
+
+        that.data.destinationXY.forEach(function (item) {
+        
+          var los = Math.pow((latitude - item[0]), 2) + Math.pow((longitude - item[1]), 2)
+          if(los<minlos){
+            minlos=los
+            minIndex=index;
           }
+          index++
+
         })
+        console.info(minlos)
+        console.info(minIndex)
+        var lastEndIndex = wx.getStorageSync('lastEndIndex')
+        if (!lastEndIndex){
+          lastEndIndex=0
+        }
+
+        that.setData({
+          startIndex: minIndex,
+          endIndex: lastEndIndex
+        })
+
+        // wx.request({
+        //   url: 'https://api.map.baidu.com/geocoder/v2/?ak=zIOkoO8wWrWA22ObIHPNkCgtLZpkP5lE&location=' + latitude + ',' + longitude + '&output=json&pois=0',
+        //   data: {},
+        //   method: 'GET', 
+        //   header: { 'Content-Type': 'application/json' },
+        //   success: function(res){
+        //     that.setData({
+        //       start:res.data.result.addressComponent.city
+        //     })
+        //     that.getList(that.data.date,res.data.result.addressComponent.city);
+        //   }
+        // })
       }
     })
   },
