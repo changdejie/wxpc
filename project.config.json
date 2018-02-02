@@ -1,7 +1,6 @@
 {
 	"description": "项目配置文件。",
-  "qcloudRoot": "./",
-
+	"qcloudRoot": "./",
 	"setting": {
 		"urlCheck": true,
 		"es6": true,
@@ -12,7 +11,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.9.1",
 	"appid": "wx6640867dbb071ddf",
-	"projectname": "wxpc",
+	"projectname": "wxpc-all",
 	"isGameTourist": false,
 	"condition": {
 		"search": {

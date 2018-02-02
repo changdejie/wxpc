@@ -15,14 +15,16 @@ Page({
     time:'请选择时间',
     types: [{ name: '1', value: '车找人', checked: true }, { name: '2', value: '人找车' }],
     isAllTypes: [{ name: '1', value: '所有小区接送', checked: true },{name: '1', value: '排除',checked: true},{name: '3', value: '途径'}],
-    Surpluss:['请选择',1,2,3,4,5,6],
-    surplus:0,
+    Surpluss:['请选择',1,2,3,4,5,6,7,8],
+    surplus: 0,
+    price:6,
     isAgree: false,
     vehicle:'',
     destinations: getApp().globalData.destination,
     startIndex: 0,
-    endIndex: 0,
-    departure:'出发地',
+    endIndex:'',
+    departure: '出发地',
+    type:1,
     destination:'目的地'
   },
   setSex:function(e){
@@ -72,11 +74,16 @@ Page({
       util.isError('手机号码错误', that);
       return false;
     }
+
+    //默认赋给最近的地址
+    that.data.departure =  wx.getStorageSync('startIndex');
+    that.data.destination = this.getData;
+
     if(that.data.departure == '出发地'){
       util.isError('请选择出发地', that);
       return false;
     }
-    if(that.data.destination == '目的地'){
+    if (that.data.endIndex == '' || that.data.destination == ''){
       util.isError('请选择目的地', that);
       return false;
     }
@@ -86,7 +93,8 @@ Page({
     }
     if(data.surplus == '0'){
       var arr = new Array('','剩余空位','乘车人数');
-      util.isError('请选择'+arr[data.type], that);
+      // util.isError('请选择' + arr[data.type], that);
+      util.isError('请选择剩余空位',that);
       return false;
     }
 
@@ -96,8 +104,6 @@ Page({
       return false;
     }
     data.sk = app.globalData.sk;
-    data.departure = that.data.departure;
-    data.destination = that.data.destination;
     util.req('info/add',data,function(data){
       if(data.status == 1){
         wx.redirectTo({
@@ -148,7 +154,7 @@ Page({
     this.setData({
       gender:app.globalData.userInfo.gender,
       name:(app.globalData.userInfo.name == '')?app.globalData.userInfo.nickName:app.globalData.userInfo.name,
-      phone:app.globalData.userInfo.phone,
+      phone: app.globalData.userInfo.phone,
       vehicle:app.globalData.userInfo.vehicle
     })
   }

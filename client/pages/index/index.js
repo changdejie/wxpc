@@ -180,9 +180,9 @@ Page({
           index++
 
         })
-        console.info(minlos)
-        console.info(minIndex)
+     
         var lastEndIndex = wx.getStorageSync('lastEndIndex')
+        wx.setStorageSync('startIndex', minIndex)
         if (!lastEndIndex){
           lastEndIndex=0
         }
