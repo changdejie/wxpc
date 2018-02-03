@@ -1,7 +1,7 @@
 // pages/info/add.js
 var util = require('../../utils/util.js');  
 var app = getApp();
-var today = util.formatTime(new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 1))).split(' ')[0];
+var today = util.formatTime(new Date((new Date()).getTime() )).split(' ')[0];
 var minday = util.formatTime(new Date()).split(' ')[0];
 var maxday =  util.formatTime(new Date((new Date()).getTime()+(1000*60*60*24*62))).split(' ')[0];
 Page({
@@ -12,11 +12,11 @@ Page({
     date:today,
     start: minday,
     end:maxday,
-    time:'请选择时间',
+    time: util.formatTime(new Date((new Date()).getTime() + (1000 * 60 * 30))).split(' ')[1],
     types: [{ name: '1', value: '车找人', checked: true }, { name: '2', value: '人找车' }],
-    isAllTypes: [{ name: '1', value: '所有小区接送', checked: true },{name: '1', value: '排除',checked: true},{name: '3', value: '途径'}],
+    isAllTypes: [{ name: '1', value: '所有小区接送', checked: true },{name: '1', value: '排除',checked: true},{name: '3', value: '路过'}],
     Surpluss:['请选择',1,2,3,4,5,6,7,8],
-    surplus: 0,
+    surplus: 4,
     price:6,
     isAgree: false,
     vehicle:'',

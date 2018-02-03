@@ -192,6 +192,8 @@ Page({
           endIndex: lastEndIndex
         })
 
+        
+
         // wx.request({
         //   url: 'https://api.map.baidu.com/geocoder/v2/?ak=zIOkoO8wWrWA22ObIHPNkCgtLZpkP5lE&location=' + latitude + ',' + longitude + '&output=json&pois=0',
         //   data: {},
@@ -206,6 +208,9 @@ Page({
         // })
       }
     })
+
+    //进行加载
+    this.getList(this.data.date, this.data.start, this.data.over);
   },
   onReachBottom:function(){
     if(!this.data.nomore){
