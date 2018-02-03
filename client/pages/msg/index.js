@@ -24,6 +24,8 @@ Page({
         if (item.type == 'notice') {
           notice = item.count;
         }
+        msgAllCount = zan + comment+notice;
+        wx.setStorageSync("msgAllCount", msgAllCount)
       })
       var data = { zan: zan, comment: comment, notice: notice };
       that.setData({ data: data });

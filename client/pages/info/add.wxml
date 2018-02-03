@@ -95,15 +95,18 @@
                         <view class="weui-label">拼车价格</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input class="weui-input" name="price" value="{{price}}"  placeholder="6"/>
+                         <picker mode="selector" name="price" value="{{price}}" range="{{prices}}"   bindchange="bindPriceChange">
+                              <input class="weui-input" name="price" value="{{prices[priceIndex]}}"  placeholder="0"/>
+                           </picker>
                     </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </view>
                 <view class="weui-cell weui-cell_input" wx:if="{{type == 1}}">
                     <view class="weui-cell__hd">
                         <view class="weui-label">车型/颜色</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input class="weui-input" type="text" name="vehicle" value="{{vehicle}}" placeholder="请填写车型"/>
+                        <input class="weui-input" type="text" name="vehicle" value="{{vehicle}}" placeholder="请填写车型/颜色"/>
                     </view>
                 </view>
                 <view class="weui-cell weui-cell_input"  wx:if="{{type == 1}}">
@@ -156,7 +159,7 @@
             <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" name="remark" placeholder="更多情况,请输入说明" style="height: 3.3em" />
+                    <textarea class="weui-textarea" name="remark" placeholder="更多情况,请输入说明,比如潞城A口，宫5西门" style="height: 3.3em" />
                 </view>
             </view>
         </view>

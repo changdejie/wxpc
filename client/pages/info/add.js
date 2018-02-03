@@ -7,7 +7,9 @@ var maxday =  util.formatTime(new Date((new Date()).getTime()+(1000*60*60*24*62)
 Page({
   data:{
     sex: ['请选择性别','男','女'],
-    type:1,
+    type: 1,
+    prices: ['请选择价格', 5, 6,7,8,9,10],
+    priceIndex:2,
     gender:0,
     date:today,
     start: minday,
@@ -22,7 +24,7 @@ Page({
     vehicle:'',
     destinations: getApp().globalData.destination,
     startIndex: 0,
-    endIndex:'',
+    endIndex:-1,
     departure: '出发地',
     type:1,
     destination:'目的地'
@@ -40,6 +42,11 @@ Page({
           time: e.detail.value
       })
   },
+  bindPriceChange: function (e) {
+    this.setData({
+      priceIndex: e.detail.value
+    })
+  },
   selectType:function(e){
     this.setData({type:e.detail.value})
   },
@@ -54,7 +61,7 @@ Page({
   formSubmit:function(e){
     var data = e.detail.value;
     var that = this;
-    console.log(data);
+  
 
     if(data.name == ''){
       util.isError('请输入姓名', that);
@@ -83,7 +90,8 @@ Page({
       util.isError('请选择出发地', that);
       return false;
     }
-    if (data.endIndex == '' || data.destination == ''){
+
+    if (this.data.endIndex == -1 || data.destination == ''){
       util.isError('请选择目的地', that);
       return false;
     }

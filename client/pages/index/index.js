@@ -16,7 +16,8 @@ Page({
     all: 'act',
     destination: getApp().globalData.destination,
     dateStr: ["今天", "明天"],
-    timeZoneStr: ["全部", "最近30分钟", "30-2小时", "2-24小时"],
+    // timeZoneStr: ["全部", "最近30分钟", "30-2小时", "2-24小时"],
+    timeZoneStr: ["全部"],
     timeZoneStrIndex: 0,
     dateStrIndex: 0,
     destinationXY: [[39.9090573776, 116.7540886291], [39.4547575590, 116.3144253176], [39.8792170855, 116.8531464547]],
@@ -65,6 +66,7 @@ Page({
       'startIndex': e.detail.value,
       'start': this.data.destination[e.detail.value]
     })
+    this.getList(this.data.date, this.data.start, this.data.over);
   },
 
   selectEnd: function (e) {
@@ -72,6 +74,7 @@ Page({
       'endIndex': e.detail.value,
       'over': this.data.destination[e.detail.value]
     })
+    this.getList(this.data.date, this.data.start, this.data.over);
   },
 
   onShareAppMessage: function () {
@@ -86,6 +89,8 @@ Page({
 
     if (that.data.dateStrIndex == 1) {
       date = util.formatTime(new Date((new Date()).getTime() + (1000 * 60 * 60 * 24))).split(' ')[0];
+    } else if (that.data.dateStrIndex == 0){
+      date = util.formatTime(new Date((new Date()).getTime())).split(' ')[0];
     }
    
     util.req('info/lists',
@@ -133,19 +138,22 @@ Page({
             type:1,
             time:util.formatTime(new Date(item.time*1000)),
             surplus:item.surplus,
-            see:item.see,
+            see: item.see,
+            price: item.price,
             gender:item.gender,
             avatarUrl:item.avatarUrl,
             url:'/pages/info/index?id='+item.id,
             tm:util.getDateDiff(item.time*1000)
             };
             list.push(obj);
-            if(item.type == 1){
-              list1.push(obj);
-            }else{
-              list2.push(obj);
-            }
+            // if(item.type == 1){
+            //   list1.push(obj);
+            // }else{
+            //   list2.push(obj);
+            // }
         })
+
+        console.log(list)
 
         that.setData({list:list,list1:list1,list2:list2});
     })

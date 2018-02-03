@@ -100,6 +100,12 @@ function getDateDiff(dateTimeStamp){
 	var hourC =diffValue/hour;
 	var minC =diffValue/minute;
   var result = '';
+
+  var time = new Date(dateTimeStamp);
+  var mm = time.getMinutes();//分
+  var h = time.getHours();//时
+
+
 	if(monthC>=1){
 		result="" + parseInt(monthC) + "月后";
 	}
@@ -107,15 +113,15 @@ function getDateDiff(dateTimeStamp){
 		result="" + parseInt(weekC) + "周后";
 	}
 	else if(dayC>=1){
-		result=""+ parseInt(dayC) +"天后";
+    result = "明天 " + h+":"+mm;
 	}
 	else if(hourC>=1){
-		result=""+ parseInt(hourC) +"小时后";
+    result =  h + ":" + mm;
 	}
 	else if(minC>=1){
 		result=""+ parseInt(minC) +"分钟后";
 	}else
-	result="刚刚";
+	result="马上发车";
 	return result;
 }
 

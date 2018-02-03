@@ -69,12 +69,12 @@ Page({
         var surp = new Array('','空位','人');
         data.data.forEach(function(item){
           var obj = {
-            start:((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/,'$1'),
-            over:((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/,'$1'),
+            start:item.departure,
+            over:item.destination,
             type:that.data.tabs[item.type],
             tp:item.type,
             time:util.formatTime(new Date(item.time*1000)),
-            surplus:item.surplus+surp[item.type],
+            surplus:item.surplus,
             see:item.see,
             gender:item.gender,
             url:'/pages/info/index?id='+item.id,

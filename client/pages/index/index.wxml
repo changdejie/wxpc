@@ -56,7 +56,8 @@
                             </view>
                             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                                 <view class="weui-media-box__title list_title"><text class="list_start">{{item.start}}</text> <image src="/img/to.png" class="to1"></image> <text class="list_over">{{item.over}}</text><text class="list_tm">{{item.tm}}</text></view>
-                                <view class="weui-media-box__desc list_desc">接送：{{item.isAllTypesMsg}} </view>
+                                <view class="weui-media-box__desc list_desc">价格：{{item.price}} 元 </view>
+                                <view class="weui-media-box__desc list_desc">{{item.isAllTypesMsg}} </view>
                                 <view class="weui-media-box__info">
                                     
                                     <view class="weui-media-box__info__meta">
@@ -126,7 +127,7 @@
 
 <navigator url="/pages/info/add">
     <view class="add" bindtap="add">
-    <image src="/img/adddy.png"></image>
+      <image src="/img/adddy.png"></image>
     </view>
 </navigator>
 
