@@ -74,6 +74,7 @@ Page({
     this.setData({modalFlag:true});
   },
   modalOk:function(){
+    util.clearError(this);
     this.setData({modalFlag:false});
   },
   appointment:function(e){
@@ -97,6 +98,7 @@ Page({
         return false;
     }
     util.clearError(that);
+    console.log(this.data.data.id)
     util.req('appointment/add',{form_id:fId,iid:this.data.data.id,name:e.detail.value.name,phone:e.detail.value.phone,surplus:e.detail.value.surplus,sk:app.globalData.sk},function(data){
       if(data.status == 1){
         that.setData({modalFlag:false});

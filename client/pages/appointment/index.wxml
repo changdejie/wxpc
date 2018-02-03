@@ -25,6 +25,22 @@
         
             <view class="weui-cells__title">拼车信息</view>
             <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">人数</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" name="surplus" maxlength="11" value="{{data.surplus}}" type="number" disabled="true"/>
+                    </view>
+                </view>  
+               <view class="weui-cell weui-cell_input StartAndStop">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">时间</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <view class="weui-input stop" >{{data.date}} {{data.time}}</view>
+                    </view>
+                </view>
                 <view class="weui-cell weui-cell_input StartAndStop">
                     <view class="weui-cell__hd">
                         <view class="weui-label">出发地</view>
@@ -41,14 +57,8 @@
                         <view class="weui-input stop" bindtap="sexDestination">{{data.destination}}</view>
                     </view>
                 </view>
-                <view class="weui-cell weui-cell_input">
-                    <view class="weui-cell__hd">
-                        <view class="weui-label">出发时间</view>
-                    </view>
-                    <view class="weui-cell__bd">
-                        <input class="weui-input" name="phone" maxlength="11" value="{{data.time}}" type="number" disabled="true"/>
-                    </view>
-                </view>               
+
+             
         </view>
 
         <view class="weui-btn-area" wx:if="{{data.status == 0}}">

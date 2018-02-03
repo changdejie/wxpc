@@ -49,11 +49,12 @@ Page({
               var phone = false;
           }
           arr.push({
-            departure: ((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1'),
-            destination: ((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1'),
+            departure: item.departure,
+            destination: item.destination,
             time: util.formatTime(new Date(item.time * 1000)),
             status: status,
-            id:item.id,
+            id: item.id,
+            iid:item.iid,
             phone: phone
           })
         })

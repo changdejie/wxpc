@@ -13,7 +13,7 @@ var list2 = new Array();
 
 Page({
   data: {
-    all:'act',
+    all: 'act',
     destination: getApp().globalData.destination,
     dateStr: ["今天", "明天"],
     timeZoneStr: ["全部", "最近30分钟", "30-2小时", "2-24小时"],
@@ -126,6 +126,7 @@ Page({
 
           var obj = {
             start: item.departure,
+            id: item.id,
             over: item.destination,
             isAllTypesMsg: item.isAllTypesMsg,
             //只能约车
@@ -172,13 +173,7 @@ Page({
   onLoad: function () {
     var that = this;
     app = getApp()
-    console.log(app.globalData)
-    that.setData({
-      'userinfo.gender': app.globalData.userInfo.gender,
-      'userinfo.name': (app.globalData.userInfo.name == '') ? app.globalData.userInfo.nickName : app.globalData.userInfo.name,
-      'userinfo.phone': app.globalData.userInfo.phone
-    })
-
+  
     wx.getSystemInfo({
         success: function(res) {
             that.setData({
@@ -237,6 +232,13 @@ Page({
         //进行加载
         that.getList(that.data.date, that.data.start, that.data.over);
 
+        //最后初始化
+        that.setData({
+          'userinfoName': (app.globalData.userInfo.name == '') ? app.globalData.userInfo.nickName : app.globalData.userInfo.name,
+          'userinfoGender': app.globalData.userInfo.gender,
+          'userinfoPhone': app.globalData.userInfo.phone
+        })
+
         // wx.request({
         //   url: 'https://api.map.baidu.com/geocoder/v2/?ak=zIOkoO8wWrWA22ObIHPNkCgtLZpkP5lE&location=' + latitude + ',' + longitude + '&output=json&pois=0',
         //   data: {},
@@ -257,11 +259,22 @@ Page({
 
 //预约相关
 
-  madal: function () {
-    this.setData({ modalFlag: true });
-    console.info(this.data.userinfo.name)
+  madal: function (e) {
+    console.log(e.target)
+    var Surpluss = new Array('请选择人数');
+    for (var i = 1; i <= e.target.dataset.surplus; i++) {
+      Surpluss.push(i);
+    }
+    this.setData({ 
+      Surpluss: Surpluss,
+      surplus: 1,
+      cdataid: e.target.dataset.id,
+      modalFlag: true
+     });
+
   },
   modalOk: function () {
+    util.clearError( this);
     this.setData({ modalFlag: false });
   },
   appointment: function (e) {
@@ -285,11 +298,13 @@ Page({
       return false;
     }
     util.clearError(that);
-    util.req('appointment/add', { form_id: fId, iid: this.data.data.id, name: e.detail.value.name, phone: e.detail.value.phone, surplus: e.detail.value.surplus, sk: app.globalData.sk }, function (data) {
+    util.req('appointment/add', { form_id: fId, iid: this.data.cdataid, name: e.detail.value.name, phone: e.detail.value.phone, surplus: e.detail.value.surplus, sk: app.globalData.sk }, function (data) {
+      console.info(data.status)
+      console.info(data.msg)
       if (data.status == 1) {
         that.setData({ modalFlag: false });
         wx.showToast({
-          title: '预约成功',
+          title: '预约成功,等待车主确认',
           icon: 'success',
           duration: 2000
         })

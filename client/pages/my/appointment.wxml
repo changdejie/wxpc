@@ -12,7 +12,7 @@
             <view class="weui-tab__panel">
                 <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
                   <view class="weui-cell" wx:for="{{my}}">
-                    <navigator url="/pages/appointment/index?id={{item.id}}">
+                    <navigator url="/pages/appointment/index?id={{item.id}}&iid={{item.iid}}&surplus={{item.surplus}}">
                       <view class="weui-cell__bd">
                           <view>{{item.name}}({{item.phone}})</view>
                           <view style="font-size: 13px;color: #888888;">人数:{{item.surplus}}</view>

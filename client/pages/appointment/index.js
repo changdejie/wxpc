@@ -3,12 +3,19 @@ var util = require('../../utils/util.js');
 var app = getApp();
 var type = 1;
 var id = 0;
+var iid = 0;
+var surplus = 0;
+
 Page({
   data: {
   },
   onLoad: function (options) {
     var that = this;
     id = options.id;
+    iid = options.iid;
+    surplus = options.surplus;
+
+
     util.req('appointment/detail', { id: options.id, sk: app.globalData.sk }, function (data) {
       console.log(data);
       data.data.time = util.formatTime(new Date(data.data.time * 1000));
@@ -22,7 +29,7 @@ Page({
       mask: true
     })
     setTimeout(function(){
-      util.req('appointment/submit', { id: id, sk: app.globalData.sk, type: type, form_id: e.detail.formId}, function (data) {
+      util.req('appointment/submit', { id: id, iid: iid, sk: app.globalData.sk, type: type, form_id: e.detail.formId, surplus: surplus}, function (data) {
         wx.hideLoading();
         if(data.status == 1){
           if(type == 1){

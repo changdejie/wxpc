@@ -54,6 +54,13 @@ function getReq(url,data,cb){
       }  
     })  
 }  
+
+
+function sleep(time) {
+  return new Promise(function (resolve, reject) {
+    setTimeout(resolve, time);
+  })
+}
   
 // 去前后空格  
 function trim(str) {  
@@ -75,6 +82,8 @@ function clearError(that) {
     errorMsg: ""  
   })  
 }  
+
+
 
 function getDateDiff(dateTimeStamp){
 	var minute = 1000 * 60;
