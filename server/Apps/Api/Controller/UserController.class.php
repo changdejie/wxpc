@@ -24,16 +24,16 @@ class UserController extends Controller {
         $u = D('User');
         $json = file_get_contents('php://input');
         $data = json_decode($json,true);
-		$UserData = $data['userInfo'];
-		$where['openId'] = vaild_sk($data['sk']);
-		unset($UserData['sk']);
-		unset($UserData['id']);
-		$u->where($where)->save($UserData);
-		$user = $u->getUserInfo($where['openId']);
-		$result['status'] = 1;
-		$result['msg'] = '修改成功';
-		$result['user'] = $user;
-		exit(json_encode($result));
+        $UserData = $data['userInfo'];
+        $where['openId'] = vaild_sk($data['sk']);
+        unset($UserData['sk']);
+        unset($UserData['id']);
+        $u->where($where)->save($UserData);
+        $user = $u->getUserInfo($where['openId']);
+        $result['status'] = 1;
+        $result['msg'] = '修改成功';
+        $result['user'] = $user;
+        exit(json_encode($result));
     }
 
     private function getUserInfo($sessionKey,$encryptedData, $iv)
@@ -52,10 +52,11 @@ class UserController extends Controller {
     //获取session_key
     private function getOpenid($code)
     {
-    	$url = "https://api.weixin.qq.com/sns/jscode2session?appid=".C('APPID')."&secret=".C('AppSecret')."&js_code=".$code."&grant_type=authorization_code";
-    	$data = file_get_contents($url);
-    	$data = json_decode($data,true);
-    	return $data;
+        $url = "https://api.weixin.qq.com/sns/jscode2session?appid=".C('APPID')."&secret=".C('AppSecret')."&js_code=".$code."&grant_type=authorization_code";
+        $data = file_get_contents($url);
+        \Think\Log::record($data);
+        $data = json_decode($data,true);
+        return $data;
     }
 
 
@@ -95,6 +96,7 @@ class UserController extends Controller {
         else
         {
             trigger_error('Can not open /dev/urandom.');
+            return substr(time().MD5(time().rand()), 0, $len);
         }
         // convert from binary to string
         $result = base64_encode($result);

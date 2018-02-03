@@ -103,12 +103,20 @@ class AppointmentController extends Controller {
 	public function submit(){
 		$u = D('User');
 		$user = $u->getUserInfo(vaild_sk(I('sk')));
+		$surplus=I('surplus');
+		$data['id']=I('iid');
+		$info=M('Info')->find($data['id']);
+		$oldsurplus=$info['surplus'];
+		$newsurplus=$oldsurplus-$surplus;
 		$infoObj = D('Info');
 		$app['status'] = I('type');
 		$info = $infoObj->field('info.*,appointment.uid as aid')->table('__INFO__ info')->join('__APPOINTMENT__ appointment on info.id=appointment.iid','RIGHT')->where('appointment.id = "'.I('id').'" and info.uid = "'.$user['id'].'"')->find();
 		if(empty($info)){
 			$result['status'] = 0;
 			$result['msg'] = '信息错误';
+		}else if($newsurplus <0){
+			$result['status'] = 0;
+			$result['msg'] = '剩余空位不足';
 		}else{
 			$where['id'] = I('id');
 			
@@ -123,6 +131,13 @@ class AppointmentController extends Controller {
 					$postData['data']['keyword2']['value'] = $info['departure'];
 					$postData['data']['keyword3']['value'] = $info['name'];
 					$postData['data']['keyword4']['value'] = $info['phone'];
+				        \Think\Log::record($info,'WARN');	
+					//存储新的剩余人数
+					$info['surplus']=$newsurplus;
+					$newdata['surplus']= $newsurplus;
+					$where['id']=$data['id'];
+					M('Info')->where($where)->save($newdata);
+					
 					$content = $info['name'].'同意了您的拼车请求,请及时与车主('.$info['phone'].')取得联系';
 				}else{
 					$postData['template_id'] = 'ZuLTdhAVhXd7MTV0-TUyQjLSoF5taZVYM0IHalqZmJ4';

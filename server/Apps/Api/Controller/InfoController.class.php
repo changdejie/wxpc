@@ -50,25 +50,29 @@ class InfoController extends Controller {
 	
 	public function lists(){
 		$i = D('Info');
+		\Think\Log::record('测试日志信息，这是警告级别','WARN');
 		$start = I('start','');
 		$over = I('over','');
+		$isAllTypesValues = I('isAllTypesValues','');
+		$isAllTypes = I('isAllTypes','');
 		$date = I('date','');
 		$where = 'info.status = 1 and info.time >= "'.time().'"';
 		
 		if($date != ''){
-			$where .= ' and info.date <= "'.$date.'"';
+			$where .= ' and info.date between "'.$date.'" and "'.$date.'"';
 		}
 		
-		if($start != ''){
-			$where .= ' and info.departure like "%'.$start.'%"';
+		if($start == '潞城'){
+			$where .= ' and  info.departure = '."'".$start."'".' and  (( info.isAllTypes = 1) or (info.isAllTypes=2  and info.isAllTypesValues not like '.'"%'.$over.'%" '.' or (info.isAllTypes=3 and info.isAllTypesValues  like '.'"%'.$over.'%"'.'))) ' ;
 		}
 		
-		if($over != ''){
+		if($over == '潞城'){
 			$where .= ' and info.destination like "%'.$over.'%"';
 		}
 		$page = I('page','1');
 		$page_count = 20;
 		$limit = ($page-1)*$page_count;
+		trace('tag',$where,'INFO',true);
 		
 		$list = $i->table('__INFO__ info')->field('info.*,user.avatarUrl')->join('__USER__ user ON user.id = info.uid','LEFT')->where($where)->limit($limit,$page_count)->order('time asc')->select();
 		//dump($i->getLastSql());
