@@ -38,7 +38,7 @@ Page({
   getPassenger: function () {
     var that = this;
     util.req('appointment/getPassenger',{sk:app.globalData.sk},function(data){
-      if(data.status == 1){
+      if(data.status == 1 && data.data != null){
         var list = data.data;
         var arr = new Array();
         list.forEach(function (item) {

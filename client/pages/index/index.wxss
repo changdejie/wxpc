@@ -13,6 +13,11 @@
 .page__bd{
     padding-bottom: 0;
 }
+/**新增**/
+.weui-tab__panel{
+    padding-top: 0px;
+}
+
 .weui-tab__content{
     padding-top: 60px;
     text-align: center;
@@ -24,7 +29,7 @@
 .list_title,.list_desc{text-align: left!important;}
 .list_title{color:black;font-size: .85rem;}
 .list_desc{margin: 5rpx 0rpx;color: #444}
-.list_type_1{background: rgb(254,230,50);padding: 0rpx 5rpx;margin-right:1rem;color:lightseagreen;}
+.list_type_1{background: rgb(254,230,50);padding: 0rpx 5rpx;margin-right:0.5rem;color:lightseagreen;}
 .list_type_2{background: lightseagreen;padding: 0rpx 5rpx;margin-right:1rem;color:rgb(254,230,50);}
 .to1{width: 60rpx;height:60rpx;position:absolute;top:12px;}
 .list_over{margin-left:60rpx;}

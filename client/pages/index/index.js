@@ -2,7 +2,7 @@
 //获取应用实例
 var util = require('../../utils/util.js');
 var app = getApp();
-var today = util.formatTime(new Date((new Date()).getTime()+(1000*60*60*24*7))).split(' ')[0];
+var today = util.formatTime(new Date((new Date()).getTime())).split(' ')[0];
 var minday = util.formatTime(new Date()).split(' ')[0];
 var maxday =  util.formatTime(new Date((new Date()).getTime()+(1000*60*60*24*62))).split(' ')[0];
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
@@ -14,7 +14,7 @@ var list2 = new Array();
 Page({
   data: {
     all:'act',
-    destination: ["潞城", "英国宫1期", "英国宫2期"],
+    destination: getApp().globalData.destination,
     dateStr: ["今天", "明天"],
     timeZoneStr: ["全部", "最近30分钟", "30-2小时", "2-24小时"],
     timeZoneStrIndex: 0,
@@ -32,6 +32,14 @@ Page({
     time: util.formatTime(new Date()).split(' ')[1],
     over:''
   },
+
+  tel: function () {
+    
+    wx.makePhoneCall({
+      phoneNumber: app.globalData.userInfo.phone
+    })
+  },
+
   tabClick: function (e) {
         this.setData({
             sliderOffset: e.currentTarget.offsetLeft,
@@ -54,13 +62,15 @@ Page({
 
   selectStart: function (e) {
     this.setData({
-      'startIndex': e.detail.value
+      'startIndex': e.detail.value,
+      'start': this.data.destination[e.detail.value]
     })
   },
 
   selectEnd: function (e) {
     this.setData({
-      'endIndex': e.detail.value
+      'endIndex': e.detail.value,
+      'over': this.data.destination[e.detail.value]
     })
   },
 
@@ -73,6 +83,11 @@ Page({
   getList:function(date='',start='',over=''){
 
     var that = this;
+
+    if (that.data.dateStrIndex == 1) {
+      date = util.formatTime(new Date((new Date()).getTime() + (1000 * 60 * 60 * 24))).split(' ')[0];
+    }
+   
     util.req('info/lists',
       {start:start,over:over,date:date,page:page},
       function(data){
@@ -80,6 +95,8 @@ Page({
           that.setData({nomore:true});
           return false;
         } 
+
+
         if(page == 1){          
           list = new Array();
           list1 = new Array();
@@ -87,25 +104,34 @@ Page({
         }
         var surp = new Array('','空位','人');
         data.list.forEach(function(item){
-          try{
-            var start = ((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
-          }catch(e){
-            var start = (item.departure).split(/[县区]/)[0];
-          }
+          // try{
+          //   var start = ((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
+          // }catch(e){
+          //   var start = (item.departure).split(/[县区]/)[0];
+          // }
 
-          try {
-            var over = ((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
-          } catch (e) {
-            var over = (item.destination).split(/[县区]/)[0];
+          // try {
+          //   var over = ((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
+          // } catch (e) {
+          //   var over = (item.destination).split(/[县区]/)[0];
+          // }
+
+          if (item.isAllTypes == 1){
+            item.isAllTypesMsg ="各个小区接送"
+          } else if (item.isAllTypes == 2){
+            item.isAllTypesMsg = "不接送:" + item.isAllTypesValues
+          } else if (item.isAllTypes == 3) {
+            item.isAllTypesMsg = "仅接送:" + item.isAllTypesValues
           }
 
           var obj = {
-            start:start,
-            over:over,
-            type:that.data.tabs[item.type],
-            tp:item.type,
+            start: item.departure,
+            over: item.destination,
+            isAllTypesMsg: item.isAllTypesMsg,
+            //只能约车
+            type:1,
             time:util.formatTime(new Date(item.time*1000)),
-            surplus:item.surplus+surp[item.type],
+            surplus:item.surplus,
             see:item.see,
             gender:item.gender,
             avatarUrl:item.avatarUrl,
@@ -145,6 +171,14 @@ Page({
   },
   onLoad: function () {
     var that = this;
+    app = getApp()
+    console.log(app.globalData)
+    that.setData({
+      'userinfo.gender': app.globalData.userInfo.gender,
+      'userinfo.name': (app.globalData.userInfo.name == '') ? app.globalData.userInfo.nickName : app.globalData.userInfo.name,
+      'userinfo.phone': app.globalData.userInfo.phone
+    })
+
     wx.getSystemInfo({
         success: function(res) {
             that.setData({
@@ -187,12 +221,21 @@ Page({
           lastEndIndex=0
         }
 
+        //如果出发地是潞城，目的地不应该一样。
+
+        if (minIndex == 0 && lastEndIndex==0){
+          lastEndIndex=1
+        }
+
         that.setData({
           startIndex: minIndex,
-          endIndex: lastEndIndex
+          endIndex: lastEndIndex,
+          start: getApp().globalData.destination[minIndex],
+          over: getApp().globalData.destination[lastEndIndex]
         })
 
-        
+        //进行加载
+        that.getList(that.data.date, that.data.start, that.data.over);
 
         // wx.request({
         //   url: 'https://api.map.baidu.com/geocoder/v2/?ak=zIOkoO8wWrWA22ObIHPNkCgtLZpkP5lE&location=' + latitude + ',' + longitude + '&output=json&pois=0',
@@ -209,9 +252,59 @@ Page({
       }
     })
 
-    //进行加载
-    this.getList(this.data.date, this.data.start, this.data.over);
+
   },
+
+//预约相关
+
+  madal: function () {
+    this.setData({ modalFlag: true });
+    console.info(this.data.userinfo.name)
+  },
+  modalOk: function () {
+    this.setData({ modalFlag: false });
+  },
+  appointment: function (e) {
+    var fId = e.detail.formId;
+    var that = this;
+    console.log(e.detail.value.surplus);
+    if (e.detail.value.name == '') {
+      util.isError('请输入姓名', that);
+      return false;
+    }
+    if (e.detail.value.phone == '') {
+      util.isError('请输入手机号', that);
+      return false;
+    }
+    if (!(/^1[34578]\d{9}$/.test(e.detail.value.phone))) {
+      util.isError('手机号码错误', that);
+      return false;
+    }
+    if (e.detail.value.surplus == 0) {
+      util.isError('请选择人数', that);
+      return false;
+    }
+    util.clearError(that);
+    util.req('appointment/add', { form_id: fId, iid: this.data.data.id, name: e.detail.value.name, phone: e.detail.value.phone, surplus: e.detail.value.surplus, sk: app.globalData.sk }, function (data) {
+      if (data.status == 1) {
+        that.setData({ modalFlag: false });
+        wx.showToast({
+          title: '预约成功',
+          icon: 'success',
+          duration: 2000
+        })
+      } else {
+        util.isError(data.msg, that);
+        return false;
+      }
+    })
+  },
+  setsurplus: function (e) {
+    this.setData({ surplus: e.detail.value })
+  },
+
+
+
   onReachBottom:function(){
     if(!this.data.nomore){
       page++;

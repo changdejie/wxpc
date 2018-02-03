@@ -44,6 +44,7 @@ App({
     
   },
 
+ 
   login:function(){
     var that = this;
     wx.login({

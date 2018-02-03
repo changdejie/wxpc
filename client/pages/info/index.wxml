@@ -8,9 +8,12 @@
         <view class="username">
             {{data.nickName}}
         </view>
-        <view class="add" wx:if="{{data.type == 1}}" wx:if="{{notme}}" bindtap="madal">
+        <!-- <view class="add" wx:if="{{data.type == 1}}" wx:if="{{notme}}" bindtap="madal"> -->
+        <view class="add"  bindtap="madal">
             <button type="mini"><image src="/img/add.png" class="icon-add"></image>预约</button>
+            
         </view>
+       
     </view>
 
     <view class="page__bd content">

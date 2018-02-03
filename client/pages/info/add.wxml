@@ -144,8 +144,8 @@
                 <view class="weui-cell weui-cell_input">
                     <view >
                         <checkbox-group  name="isAllTypesValues" bindchange="selectAllTypes">
-                            <label style="display:flex;" wx:for="{{destinations}}" wx:key="value">
-                                <checkbox value="{{item}}" checked="0"/><text>{{item}}</text>
+                            <label style="display:flex;" wx:for="{{destinations}}" wx:key="{{item}}">
+                                <checkbox value="{{item}}" checked="1"/><text>{{item}}</text>
                             </label>
                         </checkbox-group>
                     </view>
