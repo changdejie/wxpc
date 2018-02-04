@@ -51,6 +51,7 @@ Page({
     this.setData({
       dateStrIndex: e.detail.value
     })
+    page = 1;
     this.getList(e.detail.value,this.data.start,this.data.over);
   },
 
@@ -58,6 +59,7 @@ Page({
     this.setData({
       timeZoneStrIndex: e.detail.value
     })
+    page = 1;
     this.getList(e.detail.value, this.data.start, this.data.over);
   },
 
@@ -66,6 +68,7 @@ Page({
       'startIndex': e.detail.value,
       'start': this.data.destination[e.detail.value]
     })
+    page = 1;
     this.getList(this.data.date, this.data.start, this.data.over);
   },
 
@@ -74,6 +77,7 @@ Page({
       'endIndex': e.detail.value,
       'over': this.data.destination[e.detail.value]
     })
+    page = 1;
     this.getList(this.data.date, this.data.start, this.data.over);
   },
 
@@ -96,10 +100,8 @@ Page({
     util.req('info/lists',
       {start:start,over:over,date:date,page:page},
       function(data){
-        if(!data.list){
-          that.setData({nomore:true});
-          return false;
-        } 
+      
+
 
 
         if(page == 1){          
@@ -107,43 +109,48 @@ Page({
           list1 = new Array();
           list2 = new Array();
         }
-        var surp = new Array('','空位','人');
-        data.list.forEach(function(item){
-          // try{
-          //   var start = ((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
-          // }catch(e){
-          //   var start = (item.departure).split(/[县区]/)[0];
-          // }
 
-          // try {
-          //   var over = ((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
-          // } catch (e) {
-          //   var over = (item.destination).split(/[县区]/)[0];
-          // }
+        if (!data.list) {
+          that.setData({ nomore: true });
+          // return false;
+        } else{
+          var surp = new Array('', '空位', '人');
+          data.list.forEach(function (item) {
+            // try{
+            //   var start = ((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
+            // }catch(e){
+            //   var start = (item.departure).split(/[县区]/)[0];
+            // }
 
-          if (item.isAllTypes == 1){
-            item.isAllTypesMsg ="各个小区接送"
-          } else if (item.isAllTypes == 2){
-            item.isAllTypesMsg = "不接送:" + item.isAllTypesValues
-          } else if (item.isAllTypes == 3) {
-            item.isAllTypesMsg = "仅接送:" + item.isAllTypesValues
-          }
+            // try {
+            //   var over = ((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
+            // } catch (e) {
+            //   var over = (item.destination).split(/[县区]/)[0];
+            // }
 
-          var obj = {
-            start: item.departure,
-            id: item.id,
-            over: item.destination,
-            isAllTypesMsg: item.isAllTypesMsg,
-            //只能约车
-            type:1,
-            time:util.formatTime(new Date(item.time*1000)),
-            surplus:item.surplus,
-            see: item.see,
-            price: item.price,
-            gender:item.gender,
-            avatarUrl:item.avatarUrl,
-            url:'/pages/info/index?id='+item.id,
-            tm:util.getDateDiff(item.time*1000)
+            if (item.isAllTypes == 1) {
+              item.isAllTypesMsg = "各个小区接送"
+            } else if (item.isAllTypes == 2) {
+              item.isAllTypesMsg = "不接送:" + item.isAllTypesValues
+            } else if (item.isAllTypes == 3) {
+              item.isAllTypesMsg = "仅接送:" + item.isAllTypesValues
+            }
+
+            var obj = {
+              start: item.departure,
+              id: item.id,
+              over: item.destination,
+              isAllTypesMsg: item.isAllTypesMsg,
+              //只能约车
+              type: 1,
+              time: util.formatTime(new Date(item.time * 1000)),
+              surplus: item.surplus,
+              see: item.see,
+              price: item.price,
+              gender: item.gender,
+              avatarUrl: item.avatarUrl,
+              url: '/pages/info/index?id=' + item.id,
+              tm: util.getDateDiff(item.time * 1000)
             };
             list.push(obj);
             // if(item.type == 1){
@@ -151,7 +158,9 @@ Page({
             // }else{
             //   list2.push(obj);
             // }
-        })
+          })
+        }
+  
 
         console.log(list)
 
