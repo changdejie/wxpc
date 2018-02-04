@@ -34,11 +34,11 @@ class AppointmentController extends Controller {
 			$info = $infoObj->field('info.*,user.openId')->table('__INFO__ info,__USER__ user')->where('info.uid=user.id and info.id = "'.$data['iid'].'"')->find();
 			
 			$postData['touser'] = $info['openId'];
-			$postData['template_id'] = 'l5gcjhy3C_Tu-mjhoCNHOrbW4P7xlRw72dzu3iZ5tVw';
+			$postData['template_id'] = '0uHIdKSOe-aUijiAOjRXr2cD8jUljoIeZ6tOEKVzog8';
 			$postData['page'] = '/pages/appointment/index?id='.$id;
 			$postData['form_id'] = i('form_id');
 			$postData['data']['keyword1']['value'] = $data['name'];
-			$postData['data']['keyword2']['value'] = $data['phone'];
+			$postData['data']['keyword2']['value'] = $info['phone'];
 			$postData['data']['keyword3']['value'] = $info['destination'];
 			$postData['data']['keyword4']['value'] = $info['departure'];
 			$postData['data']['keyword5']['value'] = date('Y-m-d H:i',$info['time']);
@@ -126,12 +126,11 @@ class AppointmentController extends Controller {
 				$postData['form_id'] = i('form_id');
 				$postData['page'] = '/pages/info/index?id='.$info['id'];
 				if($app['status'] == 1){
-					$postData['template_id'] = 'rIfea-FXQNJa9Jh05jGyZO4-v-UfHjWJn0vNGwjSivc';
+					$postData['template_id'] = 'k-XWJpVTV1kcNkFjInd5P-fb50yqCobZ_lAChLyqZj4';
 					$postData['data']['keyword1']['value'] = date('Y-m-d H:i',$info['time']);
 					$postData['data']['keyword2']['value'] = $info['departure'];
 					$postData['data']['keyword3']['value'] = $info['name'];
-					$postData['data']['keyword4']['value'] = $info['phone'];
-				        \Think\Log::record($info,'WARN');	
+					$postData['data']['keyword4']['value'] = $info['phone'];	
 					//存储新的剩余人数
 					$info['surplus']=$newsurplus;
 					$newdata['surplus']= $newsurplus;
@@ -140,7 +139,7 @@ class AppointmentController extends Controller {
 					
 					$content = $info['name'].'同意了您的拼车请求,请及时与车主('.$info['phone'].')取得联系';
 				}else{
-					$postData['template_id'] = 'ZuLTdhAVhXd7MTV0-TUyQjLSoF5taZVYM0IHalqZmJ4';
+					$postData['template_id'] = 'JF2OKOWSXlbMhWHC__7lXEg9FFQJi8CrnuY4Lp93AMk';
 					$postData['data']['keyword1']['value'] = $info['departure'].' -> '.$info['destination'];
 					$postData['data']['keyword2']['value'] = date('Y-m-d H:i',$info['time']);
 					$postData['data']['keyword3']['value'] = '拼车人数已满';
