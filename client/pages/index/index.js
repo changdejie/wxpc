@@ -252,10 +252,17 @@ Page({
         that.getList(that.data.date, that.data.start, that.data.over);
 
 
+        var name = "";
+        if (app.globalData.userInfo) {
+          name = app.globalData.userInfo.name;
+        }
+        if (app.globalData.userInfo && name == "") {
+          name = app.globalData.userInfo.nickName;
+        }
 
         //最后初始化
         that.setData({
-          'userinfoName': app.globalData.userInfo ? (app.globalData.userInfo.name == "" ? app.globalData.userInfo.nickname:""):"",
+          'userinfoName': name,
           'userinfoGender': app.globalData.userInfo ? app.globalData.userInfo.gender :"",
           'userinfoPhone': app.globalData.userInfo ? app.globalData.userInfo.phone :""
         })

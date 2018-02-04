@@ -124,9 +124,17 @@ Page({
       }
     })
 
+    var name = "";
+    if (app.globalData.userInfo) {
+      name = app.globalData.userInfo.name;
+    }
+    if (app.globalData.userInfo && name == "") {
+      name = app.globalData.userInfo.nickName;
+    }
+
     that.setData({
       'userInfo.gender': app.globalData.userInfo ? app.globalData.userInfo.gender:"",
-      'userInfo.name': app.globalData.userInfo ? (app.globalData.userInfo.name == "" ? app.globalData.userInfo.nickname : ""):"",
+      'userInfo.name': name,
       'userInfo.phone': app.globalData.userInfo ? app.globalData.userInfo.phone:""
     })
 

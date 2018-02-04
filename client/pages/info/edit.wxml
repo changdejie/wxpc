@@ -3,6 +3,7 @@
         <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
 
         <form bindsubmit="formSubmit">
+            <view class="remaind">注意，修改只是对原有信息的修改，而不是重新发布一条，原来约过乘客不能再约该信息，如果想要新发布一条，请到首页.</view>
             <view class="weui-cells__title">确认联系人信息</view>
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_input">
