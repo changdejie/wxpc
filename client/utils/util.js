@@ -93,7 +93,6 @@ function getDateDiff(dateTimeStamp){
 	var month = day * 30;
 	var now = new Date().getTime();
 	var diffValue = dateTimeStamp - now;
-	if(diffValue < 0){return;}
 	var monthC =diffValue/month;
 	var weekC =diffValue/(7*day);
 	var dayC =diffValue/day;
@@ -105,10 +104,11 @@ function getDateDiff(dateTimeStamp){
   var mm = time.getMinutes();//分
   var h = time.getHours();//时
 
-
 	if(monthC>=1){
 		result="" + parseInt(monthC) + "月后";
-	}
+  } else if (diffValue <0) {
+    result = "已过期";
+  }
 	else if(weekC>=1){
 		result="" + parseInt(weekC) + "周后";
 	}

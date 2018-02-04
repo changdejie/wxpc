@@ -236,6 +236,9 @@ Page({
           lastEndIndex=1
         }
 
+        wx.setStorageSync("startIndex", minIndex)
+
+
         that.setData({
           startIndex: minIndex,
           endIndex: lastEndIndex,
@@ -272,7 +275,11 @@ Page({
   },
 
 //预约相关
-
+  bindAgreeChange: function (e) {
+    this.setData({
+      isAgree: !!e.detail.value.length
+    });
+  },
   madal: function (e) {
     console.log(e.target)
     var Surpluss = new Array('请选择人数');
@@ -311,6 +318,12 @@ Page({
       util.isError('请选择人数', that);
       return false;
     }
+
+    if (!e.detail.value.isAgree[0]) {
+      util.isError('请阅读并同意条款', that);
+      return false;
+    }
+
     util.clearError(that);
     util.req('appointment/add', { form_id: fId, iid: this.data.cdataid, name: e.detail.value.name, phone: e.detail.value.phone, surplus: e.detail.value.surplus, sk: app.globalData.sk }, function (data) {
       console.info(data.status)

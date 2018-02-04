@@ -9,7 +9,7 @@ Page({
     'back':false,
     'nomore':false,
     'shoucang':false,
-    'notme':false,
+    'notme': false,
     'modalFlag':false
   },
   tel:function(){
@@ -153,7 +153,7 @@ Page({
         'data.gender':data.data.gender,
         'notme':notme,
         'Surpluss':Surpluss,
-        'surplus':0
+        'surplus':1
         });
     })   
     page = 1; 

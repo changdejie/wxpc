@@ -23,7 +23,6 @@ Page({
     isAgree: false,
     vehicle:'',
     destinations: getApp().globalData.destination,
-    startIndex: 0,
     endIndex:-1,
     departure: '出发地',
     type:1,
@@ -136,7 +135,11 @@ Page({
     this.setData({
       'endIndex': e.detail.value
     })
-    wx.setStorageSync("add_endIndex", e.detail.value)
+    //如果不是潞城设置
+    if (e.detail.value != 0){
+      wx.setStorageSync("last_endIndex", e.detail.value)
+    }
+    
   },
 
   sexDeparture:function(){
@@ -164,6 +167,7 @@ Page({
       gender:app.globalData.userInfo.gender,
       name:(app.globalData.userInfo.name == '')?app.globalData.userInfo.nickName:app.globalData.userInfo.name,
       phone: app.globalData.userInfo.phone,
+      startIndex: wx.getStorageSync("startIndex"),
       vehicle:app.globalData.userInfo.vehicle
     })
   }

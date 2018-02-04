@@ -8,6 +8,7 @@ Page({
     sex: ['请选择性别','男','女'],
     type:1,
     gender:0,
+    destinations: getApp().globalData.destination,
     date:today,
     start:today,
     end:maxday,
@@ -20,6 +21,23 @@ Page({
     departure:'出发地',
     destination:'目的地'
   },
+
+  selectStart: function (e) {
+    this.setData({
+      'startIndex': e.detail.value
+    })
+  },
+
+  selectEnd: function (e) {
+    this.setData({
+      'endIndex': e.detail.value
+    })
+    //如果不是潞城设置
+    if (e.detail.value != 0) {
+      wx.setStorageSync("last_endIndex", e.detail.value)
+    }
+  },
+
   setSex:function(e){
     this.setData({'data.gender':e.detail.value})
   },
@@ -128,7 +146,15 @@ Page({
     util.req('info/index',{id:options.id},function(data){
       var time = util.formatTime(new Date(data.data.time*1000)).split(' ')[1];
       data.data.time = time;
+      //找到原来 index
+      var olddeparture = data.data.departure;
+      var olddestination = data.data.destination;
       that.setData({data:data.data});
+      var startIndex = getApp().globalData.destination.indexOf(olddeparture)
+      var endIndex = getApp().globalData.destination.indexOf(olddestination)
+      that.setData({ "endIndex": endIndex });
+      that.setData({ "startIndex": startIndex });
+
     })
   }
 })
