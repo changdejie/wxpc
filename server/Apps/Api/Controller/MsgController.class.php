@@ -16,6 +16,10 @@ class MsgController extends Controller {
 			$arr[] = $v['id'];
 		}
 		$str = implode(',',$arr);
+		if(!$str){
+		    $str=$str.'-1';
+		}
+	
 		$str = 'id in ('.$str.')';
 		M('msg')->where($str)->save($see);
 		$result['status'] = 1;

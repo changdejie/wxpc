@@ -39,7 +39,7 @@
       },
       {
         "pagePath": "pages/dynamic/index",
-        "text": "动态",
+        "text": "反馈",
         "iconPath": "img/favorite.png",
         "selectedIconPath": "img/favorite1.png"
       },

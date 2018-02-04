@@ -160,9 +160,6 @@ Page({
             // }
           })
         }
-  
-
-        console.log(list)
 
         that.setData({list:list,list1:list1,list2:list2});
     })
