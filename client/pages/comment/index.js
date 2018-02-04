@@ -24,7 +24,6 @@ Page({
                   },
                   success: function(res){
                     var data = JSON.parse(res.data);
-                    console.log(data);
                     if(data.status == 1){
                       that.setData({
                           files: that.data.files.concat(data.data)

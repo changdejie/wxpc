@@ -125,9 +125,9 @@ Page({
     })
 
     that.setData({
-      'userInfo.gender':app.globalData.userInfo.gender,
-      'userInfo.name':(app.globalData.userInfo.name == '')?app.globalData.userInfo.nickName:app.globalData.userInfo.name,
-      'userInfo.phone':app.globalData.userInfo.phone
+      'userInfo.gender': app.globalData.userInfo ? app.globalData.userInfo.gender:"",
+      'userInfo.name': app.globalData.userInfo ? app.globalData.userInfo.name:"",
+      'userInfo.phone': app.globalData.userInfo ? app.globalData.userInfo.phone:""
     })
 
     util.req('fav/isfav',{iid:options.id,sk:app.globalData.sk},function(data){

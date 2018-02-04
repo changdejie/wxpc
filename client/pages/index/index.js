@@ -204,8 +204,8 @@ Page({
         var latitude = res.latitude
         var longitude = res.longitude  
 
-        console.info(latitude)
-        console.info(longitude)
+        // console.info(latitude)
+        // console.info(longitude)
 
         var minlos=10000000
         //记录循环index
@@ -326,8 +326,6 @@ Page({
 
     util.clearError(that);
     util.req('appointment/add', { form_id: fId, iid: this.data.cdataid, name: e.detail.value.name, phone: e.detail.value.phone, surplus: e.detail.value.surplus, sk: app.globalData.sk }, function (data) {
-      console.info(data.status)
-      console.info(data.msg)
       if (data.status == 1) {
         that.setData({ modalFlag: false });
         wx.showToast({

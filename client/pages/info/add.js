@@ -164,11 +164,12 @@ Page({
   },
   onLoad:function(options){
     this.setData({
-      gender:app.globalData.userInfo.gender,
-      name:(app.globalData.userInfo.name == '')?app.globalData.userInfo.nickName:app.globalData.userInfo.name,
-      phone: app.globalData.userInfo.phone,
+
+      gender: app.globalData.userInfo ? app.globalData.userInfo.gender : "",
+      name: app.globalData.userInfo ?app.globalData.userInfo.name:"",
+      phone: app.globalData.userInfo ?app.globalData.userInfo.phone:"",
       startIndex: wx.getStorageSync("startIndex"),
-      vehicle:app.globalData.userInfo.vehicle
+      vehicle: app.globalData.userInfo ?app.globalData.userInfo.vehicle:""
     })
   }
 })

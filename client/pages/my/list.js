@@ -36,7 +36,7 @@ Page({
   },
   edit:function(e){
     var currentTarget = e.currentTarget.id;
-    console.log('/pages/info/add?id='+list[currentTarget].id);
+    // console.log('/pages/info/add?id='+list[currentTarget].id);
     wx.navigateTo({
       url: '/pages/info/edit?id='+list[currentTarget].id,
       complete:function(res){

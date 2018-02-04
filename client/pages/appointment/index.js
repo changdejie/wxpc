@@ -17,7 +17,7 @@ Page({
 
 
     util.req('appointment/detail', { id: options.id, sk: app.globalData.sk }, function (data) {
-      console.log(data);
+      // console.log(data);
       data.data.time = util.formatTime(new Date(data.data.time * 1000));
       that.setData({ data: data.data });
     })
