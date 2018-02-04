@@ -20,7 +20,7 @@ Page({
     timeZoneStr: ["全部"],
     timeZoneStrIndex: 0,
     dateStrIndex: 0,
-    destinationXY: [[39.9090573776, 116.7540886291], [39.4547575590, 116.3144253176], [39.8792170855, 116.8531464547]],
+    destinationXY: getApp().globalData.destinationXY,
     date:today,
     minday:today,
     maxday:maxday,
@@ -224,15 +224,13 @@ Page({
 
         })
      
-        var lastEndIndex = wx.getStorageSync('lastEndIndex')
+        //获取默认值
+        var lastEndIndex = wx.getStorageSync('last_endIndex')
         wx.setStorageSync('startIndex', minIndex)
-        if (!lastEndIndex){
-          lastEndIndex=0
-        }
+ 
 
         //如果出发地是潞城，目的地不应该一样。
-
-        if (minIndex == 0 && lastEndIndex==0){
+        if (minIndex == 0 && !lastEndIndex ){
           lastEndIndex=1
         }
 
@@ -251,9 +249,9 @@ Page({
 
         //最后初始化
         that.setData({
-          'userinfoName': (app.globalData.userInfo.name == '') ? app.globalData.userInfo.nickName : app.globalData.userInfo.name,
-          'userinfoGender': app.globalData.userInfo.gender,
-          'userinfoPhone': app.globalData.userInfo.phone
+          'userinfoName': app.globalData.userInfo ?  app.globalData.userInfo.name:"",
+          'userinfoGender': app.globalData.userInfo ? app.globalData.userInfo.gender :"",
+          'userinfoPhone': app.globalData.userInfo ? app.globalData.userInfo.phone :""
         })
 
         // wx.request({

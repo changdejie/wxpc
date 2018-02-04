@@ -169,6 +169,7 @@ Page({
       name: app.globalData.userInfo ?app.globalData.userInfo.name:"",
       phone: app.globalData.userInfo ?app.globalData.userInfo.phone:"",
       startIndex: wx.getStorageSync("startIndex"),
+      endIndex: wx.getStorageSync("startIndex") == 0 ? wx.getStorageSync("last_endIndex"):0,
       vehicle: app.globalData.userInfo ?app.globalData.userInfo.vehicle:""
     })
   }
