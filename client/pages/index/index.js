@@ -230,8 +230,12 @@ Page({
  
 
         //如果出发地是潞城，目的地不应该一样。
+        //出发地不是潞城，目的地就是潞城
         if (minIndex == 0 && !lastEndIndex ){
           lastEndIndex=1
+        } else if (minIndex != 0){
+             wx.setStorageSync("last_endIndex", minIndex)
+            lastEndIndex  =0
         }
 
         wx.setStorageSync("startIndex", minIndex)
@@ -247,9 +251,11 @@ Page({
         //进行加载
         that.getList(that.data.date, that.data.start, that.data.over);
 
+
+
         //最后初始化
         that.setData({
-          'userinfoName': app.globalData.userInfo ?  app.globalData.userInfo.name:"",
+          'userinfoName': app.globalData.userInfo ? (app.globalData.userInfo.name == "" ? app.globalData.userInfo.nickname:""):"",
           'userinfoGender': app.globalData.userInfo ? app.globalData.userInfo.gender :"",
           'userinfoPhone': app.globalData.userInfo ? app.globalData.userInfo.phone :""
         })

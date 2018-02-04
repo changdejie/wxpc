@@ -126,7 +126,7 @@ Page({
 
     that.setData({
       'userInfo.gender': app.globalData.userInfo ? app.globalData.userInfo.gender:"",
-      'userInfo.name': app.globalData.userInfo ? app.globalData.userInfo.name:"",
+      'userInfo.name': app.globalData.userInfo ? (app.globalData.userInfo.name == "" ? app.globalData.userInfo.nickname : ""):"",
       'userInfo.phone': app.globalData.userInfo ? app.globalData.userInfo.phone:""
     })
 

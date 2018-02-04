@@ -166,7 +166,7 @@ Page({
     this.setData({
 
       gender: app.globalData.userInfo ? app.globalData.userInfo.gender : "",
-      name: app.globalData.userInfo ?app.globalData.userInfo.name:"",
+      name: app.globalData.userInfo ? (app.globalData.userInfo.name == "" ? app.globalData.userInfo.nickname : ""):"",
       phone: app.globalData.userInfo ?app.globalData.userInfo.phone:"",
       startIndex: wx.getStorageSync("startIndex"),
       endIndex: wx.getStorageSync("startIndex") == 0 ? wx.getStorageSync("last_endIndex"):0,

@@ -29,6 +29,10 @@ Page({
         var arr = that.data.list;
       }
 
+      if(!list){
+        return;
+      }
+
       list.forEach(function (item) {
         var li = {
           avatarUrl: item.avatarUrl,

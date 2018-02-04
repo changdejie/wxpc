@@ -168,7 +168,7 @@ Page({
       success: function(res){
         that.setData({
           userInfo:res.data,
-          gender:res.data.gender,
+          gender: res.data?res.data.gender:"",
           'province':res.data.province,
           'city':res.data.city,
           'county':res.data.county
