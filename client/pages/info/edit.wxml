@@ -3,7 +3,6 @@
         <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
 
         <form bindsubmit="formSubmit">
-            <view class="remaind">注意，修改只是对原有信息的修改，而不是重新发布一条，原来约过乘客不能再约该信息，如果想要新发布一条，请到首页.</view>
             <view class="weui-cells__title">确认联系人信息</view>
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_input">
@@ -156,20 +155,22 @@
             </view>
         </view>
 
-        <checkbox-group bindchange="bindAgreeChange" name="isAgree">
-            <label class="weui-agree" for="weuiAgree">
-                <view class="weui-agree__text">
-                    <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="{{isAgree}}" />
-                    <view class="weui-agree__checkbox-icon">
-                        <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" wx:if="{{isAgree}}"></icon>
-                    </view>
-                    阅读并同意<navigator url="/pages/notice/index?id=1" class="weui-agree__link">《免责声明》</navigator>
-                </view>
-            </label>
-        </checkbox-group>
 
         <view class="weui-btn-area">
-            <button class="weui-btn" type="primary" formType="submit">重新发布</button>
+            <view class="remaind">注意，修改和重新发布的区别，修改是修改原来的记录，约过的乘客不能再约，重新发布是以此为模板发布一条全新的，请注意修改时间和日期。</view>
+          
+
+              <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__bd">
+                        <radio-group  class="radio-group weui-cell weui-check__label" name="submitType" >
+                            <label class="radio" wx:for="{{submitTypes}}" wx:key="value">
+                                <radio value="{{item.name}}" checked="{{item.checked}}"/><text>{{item.value}}</text>
+                            </label>
+                        </radio-group>
+                    </view>
+                </view> 
+            <button class="weui-btn" type="primary"  formType="submit" >确定</button>
+                  
         </view>
 
         </form>

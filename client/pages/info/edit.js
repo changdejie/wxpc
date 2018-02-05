@@ -16,6 +16,7 @@ Page({
     time:'请选择时间',
     types:[{name: '1', value: '车找人',checked: true},{name: '2', value: '人找车'}],
     isAllTypes: [{ name: '1', value: '所有小区', checked: true }, { name: '2', value: '排除' }, { name: '3', value: '路过' }],
+    submitTypes: [{ name: '1', value: '重新发布', checked: true }, { name: '2', value: '修改原来' }],
     Surpluss:['请选择',1,2,3,4,5,6],
     surplus:0,
     isAgree: false,
@@ -65,8 +66,7 @@ Page({
   formSubmit:function(e){
     var data = e.detail.value;
     var that = this;
-    console.log(data);
-
+    console.log(data)
     if(data.name == ''){
       util.isError('请输入姓名', that);
       return false;
@@ -103,15 +103,14 @@ Page({
       return false;
     }
 
-    
-    if(!data.isAgree[0]){
-      util.isError('请阅读并同意条款',that);
-      return false;
-    }
+  
     data.sk = app.globalData.sk;
     data.departure = that.data.data.departure;
     data.destination = that.data.data.destination;
-    data.id = that.data.data.id;
+    if (data.submitType != "1"){
+      data.id = that.data.data.id;
+    }
+    
     util.req('info/add',data,function(data){
       if(data.status == 1){
         wx.redirectTo({
@@ -124,6 +123,8 @@ Page({
     })
     util.clearError(that);
   },
+
+  
   sexDeparture:function(){
     var that = this;
     wx.chooseLocation({
