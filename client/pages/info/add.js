@@ -16,7 +16,7 @@ Page({
     end:maxday,
     time: util.formatTime(new Date((new Date()).getTime() + (1000 * 60 * 30))).split(' ')[1],
     types: [{ name: '1', value: '车找人', checked: true }, { name: '2', value: '人找车' }],
-    isAllTypes: [{ name: '1', value: '所有小区', checked: true },{name: '2', value: '排除'},{name: '3', value: '路过'}],
+    isAllTypes: [{ name: '1', value: '所有小区', checked: true }, { name: '2', value: '排除' }, { name: '3', value: '路过' }],
     Surpluss:['请选择',1,2,3,4,5,6,7,8],
     surplus: 4,
     price:6,
@@ -49,6 +49,8 @@ Page({
   selectType:function(e){
     this.setData({type:e.detail.value})
   },
+
+
   setsurplus:function(e){
     this.setData({surplus:e.detail.value})
   },

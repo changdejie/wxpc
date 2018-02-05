@@ -9,11 +9,13 @@ Page({
     type:1,
     gender:0,
     destinations: getApp().globalData.destination,
+    destinationsIndex: [],
     date:today,
     start:today,
     end:maxday,
     time:'请选择时间',
     types:[{name: '1', value: '车找人',checked: true},{name: '2', value: '人找车'}],
+    isAllTypes: [{ name: '1', value: '所有小区', checked: true }, { name: '2', value: '排除' }, { name: '3', value: '路过' }],
     Surpluss:['请选择',1,2,3,4,5,6],
     surplus:0,
     isAgree: false,
@@ -54,6 +56,7 @@ Page({
   setsurplus:function(e){
     this.setData({'data.surplus':e.detail.value})
   },
+
   bindAgreeChange: function (e) {
       this.setData({
           isAgree: !!e.detail.value.length
@@ -146,15 +149,57 @@ Page({
     util.req('info/index',{id:options.id},function(data){
       var time = util.formatTime(new Date(data.data.time*1000)).split(' ')[1];
       data.data.time = time;
+      console.log(data.data)
       //找到原来 index
       var olddeparture = data.data.departure;
       var olddestination = data.data.destination;
+      var olddisAllTypes = data.data.isAllTypes;
+      var olddisAllTypesValues = data.data.isAllTypesValues;
       that.setData({data:data.data});
       var startIndex = getApp().globalData.destination.indexOf(olddeparture)
       var endIndex = getApp().globalData.destination.indexOf(olddestination)
       that.setData({ "endIndex": endIndex });
       that.setData({ "startIndex": startIndex });
 
+      var newisAllTypes = []
+      that.data.isAllTypes.forEach(function (item) {
+        if (olddisAllTypes == item.name) {
+          var o = new Object()
+          o.checked = true;
+          o.value = item.value;
+          o.name = item.name;
+          newisAllTypes.push(o)
+        } else {
+          var o = new Object()
+          o.checked = false;
+          o.value = item.value;
+          o.name = item.name;
+          newisAllTypes.push(o)
+        }
+      })
+      that.setData({ "newisAllTypes": newisAllTypes });
+
+
+
+
+      var newdestinations=[]
+      that.data.destinations.forEach(function (item) {
+        if (olddisAllTypesValues.indexOf(item) >= 0){
+          var o = new Object()
+          o.checked = true;
+          o.value = item;
+          newdestinations.push(o)
+        }else{
+          var o = new Object()
+          o.checked = false;
+          o.value = item;
+          newdestinations.push(o)
+        }
+      })
+
+      console.log(newdestinations)
+      that.setData({ "newdestinations": newdestinations });
+      
     })
   }
 })

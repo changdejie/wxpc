@@ -126,6 +126,26 @@
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </view>
+                
+               <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__bd">
+                        <radio-group  class="radio-group weui-cell weui-check__label" name="isAllTypes" bindchange="selectisAllTypes">
+                            <label class="radio" wx:for="{{newisAllTypes}}" wx:key="value">
+                                <radio value="{{item.name}}" checked="{{item.checked}}"/><text>{{item.value}}</text>
+                            </label>
+                        </radio-group>
+                    </view>
+                </view> 
+
+                <view class="weui-cell weui-cell_input">
+                    <view >
+                        <checkbox-group  name="isAllTypesValues" bindchange="selectAllTypes">
+                            <label style="display:flex;" wx:for="{{newdestinations}}" wx:key="{{item}}">
+                                <checkbox value="{{item.value}}" checked="{{item.checked}}"/><text>{{item.value}}</text>
+                            </label>
+                        </checkbox-group>
+                    </view>
+                </view> 
             </view>
             <view class="weui-cells__title">其他信息</view>
             <view class="weui-cells weui-cells_after-title">
