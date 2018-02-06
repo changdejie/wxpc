@@ -43,7 +43,7 @@
                         <view class="weui-label">出发地</view>
                     </view>
                     <view class="weui-cell__bd">            
-                      <picker mode="selector" name="departure"   bindchange="selectStart" range="{{destinations}}">
+                      <picker mode="selector" name="departure" value="{{destinations[startIndex]}}" bindchange="selectStart" range="{{destinations}}">
                             <view class="weui-input" >{{destinations[startIndex]}}</view>                    
                       </picker>              
                     </view>
@@ -54,7 +54,7 @@
                         <view class="weui-label">目的地</view>
                     </view>
                     <view class="weui-cell__bd">
-                    <picker mode="selector" name="destination"  bindchange="selectEnd" range="{{destinations}}">
+                    <picker mode="selector" name="destination" value="{{destinations[endIndex]}}"  bindchange="selectEnd" range="{{destinations}}">
                       
                           <view class="weui-input" >{{destinations[endIndex]}}</view>                 
                                  

@@ -34,10 +34,9 @@ Page({
     over:''
   },
 
-  tel: function () {
-    
+  tel: function (e) {
     wx.makePhoneCall({
-      phoneNumber: app.globalData.userInfo.phone
+      phoneNumber: e.target.dataset.phone
     })
   },
 
@@ -146,6 +145,7 @@ Page({
               time: util.formatTime(new Date(item.time * 1000)),
               surplus: item.surplus,
               see: item.see,
+              phone: item.phone,
               price: item.price,
               gender: item.gender,
               avatarUrl: item.avatarUrl,

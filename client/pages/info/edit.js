@@ -9,7 +9,6 @@ Page({
     type:1,
     gender:0,
     destinations: getApp().globalData.destination,
-    destinationsIndex: [],
     date:today,
     start:today,
     end:maxday,
@@ -67,6 +66,13 @@ Page({
     var data = e.detail.value;
     var that = this;
     console.log(data)
+
+
+
+    //默认赋给最近的地址
+    data.departure = getApp().globalData.destination[that.data.startIndex];
+    data.destination = getApp().globalData.destination[that.data.endIndex];
+
     if(data.name == ''){
       util.isError('请输入姓名', that);
       return false;
@@ -105,8 +111,6 @@ Page({
 
   
     data.sk = app.globalData.sk;
-    data.departure = that.data.data.departure;
-    data.destination = that.data.data.destination;
     if (data.submitType != "1"){
       data.id = that.data.data.id;
     }

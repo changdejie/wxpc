@@ -96,7 +96,7 @@
                     </view>
                     <view class="weui-cell__bd">
                          <picker mode="selector" name="price" value="{{price}}" range="{{prices}}"   bindchange="bindPriceChange">
-                              <input class="weui-input" name="price" value="{{prices[priceIndex]}}"  placeholder="0"/>
+                              <view class="weui-input" name="price" value="{{prices[priceIndex]}}"  placeholder="0"/>
                            </picker>
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>

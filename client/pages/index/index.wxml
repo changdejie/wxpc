@@ -69,7 +69,7 @@
                                      <view class="weui-media-box__info__meta list_type_1" >详情</view>
                                     </navigator>
 
-                                    <view class="weui-media-box__info__meta list_type_1" bindtap="tel">打电话</view>
+                                    <view class="weui-media-box__info__meta list_type_1" data-phone="{{item.phone}}" bindtap="tel">打电话</view>
                                    
                                 </view>
                             </view>

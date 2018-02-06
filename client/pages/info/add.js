@@ -84,8 +84,8 @@ Page({
     }
 
     //默认赋给最近的地址
-    data.departure = getApp().globalData.destination[wx.getStorageSync('startIndex')];
-    data.destination = getApp().globalData.destination[wx.getStorageSync("add_endIndex")];
+    data.departure = getApp().globalData.destination[that.data.startIndex];
+    data.destination = getApp().globalData.destination[that.data.endIndex];
 
     if(data.departure == '出发地'){
       util.isError('请选择出发地', that);
