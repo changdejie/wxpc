@@ -23,7 +23,8 @@ Page({
     isAgree: false,
     vehicle:'',
     destinations: getApp().globalData.destination,
-    endIndex:-1,
+    newisAllTypes: getApp().globalData.destination,
+    endIndex: -1,
     departure: '出发地',
     type:1,
     destination:'目的地'
@@ -86,6 +87,7 @@ Page({
     //默认赋给最近的地址
     data.departure = getApp().globalData.destination[that.data.startIndex];
     data.destination = getApp().globalData.destination[that.data.endIndex];
+    data.price = that.data.prices[that.data.priceIndex];
 
     if(data.departure == '出发地'){
       util.isError('请选择出发地', that);
@@ -144,6 +146,32 @@ Page({
     
   },
 
+  selectAllTypes: function (e) {
+    var that = this;
+    if (e.detail.value != 1){
+      var newisAllTypes = []
+      that.data.destinations.forEach(function (item) {
+
+
+        var o = new Object()
+        if (item == that.data.destinations[that.data.startIndex] || item == that.data.destinations[that.data.endIndex]){
+          console.log("hi")
+          o.checked = true;
+          o.disabled = true;
+        }else{
+          console.log(item)
+          o.checked = false;
+          o.disabled = false;
+        }
+          o.value = item;
+          o.name = item;
+          newisAllTypes.push(o)
+        
+      })
+      this.setData({ "newisAllTypes": newisAllTypes });
+    }
+  },
+
   sexDeparture:function(){
     var that = this;
     wx.chooseLocation({
@@ -173,6 +201,20 @@ Page({
       name = app.globalData.userInfo.nickName;
     }
     console.log(app.globalData.userInfo)
+
+
+    var newisAllTypes = []
+    this.data.destinations.forEach(function (item) {
+
+      var o = new Object()
+      o.checked = true;
+      o.value = item;
+      o.name = item;
+      o.disabled = false;
+      newisAllTypes.push(o)
+
+    })
+    this.setData({ "newisAllTypes": newisAllTypes });
 
     this.setData({
       gender: app.globalData.userInfo ? app.globalData.userInfo.gender : "",

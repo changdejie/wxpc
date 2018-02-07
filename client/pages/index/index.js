@@ -340,7 +340,7 @@ Page({
       if (data.status == 1) {
         that.setData({ modalFlag: false });
         wx.showToast({
-          title: '预约成功,等待车主确认',
+          title: '预约中,等待车主确认',
           icon: 'success',
           duration: 2000
         })

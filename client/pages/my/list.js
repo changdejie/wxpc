@@ -15,7 +15,7 @@ Page({
       content: '确定删除?',
       success: function(res) {
         if (res.confirm) {
-          util.req('info/del',{sk:app.globalData.sk,id:list[currentTarget].id},function(data){
+          util.req('info/disabled',{sk:app.globalData.sk,id:list[currentTarget].id},function(data){
             if(data.status == 1){
               list.splice(currentTarget,1);
               that.setData({list:list});

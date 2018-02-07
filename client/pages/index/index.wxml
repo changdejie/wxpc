@@ -50,7 +50,7 @@
                 <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
                     
                     <view class="weui-panel__bd">
-                        <view wx:for="{{list}}" wx:for-index="idx" wx:key="k" wx:for-item="item" url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                        <view wx:for="{{list}}" wx:for-index="idx" wx:key="k" wx:for-item="item" url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" >
                             <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                                 <image class="weui-media-box__thumb" src="{{item.avatarUrl}}" ></image>
                             </view>

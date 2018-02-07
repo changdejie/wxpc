@@ -129,7 +129,7 @@ Page({
     }
     this.setData({
       // 'userInfo.province':this.data.province,
-      'userInfo.city':this.data.city,
+      // 'userInfo.city':this.data.city,
       'userInfo.county':this.data.county,
       'userInfo.nickName':e.detail.value.nickName,
       'userInfo.phone':e.detail.value.phone
@@ -170,7 +170,7 @@ Page({
           userInfo:res.data,
           gender: res.data?res.data.gender:"",
           // 'province':res.data.province,
-          'city':res.data.city,
+          // 'city':res.data.city,
           'county':res.data.county
         })
       },
