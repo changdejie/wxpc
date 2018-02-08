@@ -148,14 +148,14 @@ Page({
 
   selectAllTypes: function (e) {
     var that = this;
-    if (e.detail.value != 1){
+    if (e.detail.value == 3){
       var newisAllTypes = []
       that.data.destinations.forEach(function (item) {
 
 
         var o = new Object()
         if (item == that.data.destinations[that.data.startIndex] || item == that.data.destinations[that.data.endIndex]){
-          console.log("hi")
+        
           o.checked = true;
           o.disabled = true;
         }else{
@@ -168,8 +168,49 @@ Page({
           newisAllTypes.push(o)
         
       })
-      this.setData({ "newisAllTypes": newisAllTypes });
+    } else if (e.detail.value == 2){
+      var newisAllTypes = []
+      that.data.destinations.forEach(function (item) {
+
+
+        var o = new Object()
+        if (item == that.data.destinations[that.data.startIndex] || item == that.data.destinations[that.data.endIndex]) {
+
+          o.checked = false;
+          o.disabled = true;
+        } else {
+
+          o.checked = false;
+          o.disabled = false;
+        }
+        o.value = item;
+        o.name = item;
+        newisAllTypes.push(o)
+
+      })
+    } else if (e.detail.value == 1){
+      var newisAllTypes = []
+      that.data.destinations.forEach(function (item) {
+
+
+        var o = new Object()
+        if (item == that.data.destinations[that.data.startIndex] || item == that.data.destinations[that.data.endIndex]) {
+          o.checked = true;
+          o.disabled = true;
+        } else {
+         
+          o.checked = true;
+          o.disabled = false;
+        }
+        o.value = item;
+        o.name = item;
+        newisAllTypes.push(o)
+
+      })
     }
+  
+      this.setData({ "newisAllTypes": newisAllTypes });
+    
   },
 
   sexDeparture:function(){
@@ -194,28 +235,14 @@ Page({
   },
   onLoad:function(options){
     var name = "";
+    var that =this;
     if (app.globalData.userInfo){
       name = app.globalData.userInfo.name;
     }
     if (app.globalData.userInfo && name =="" ){
       name = app.globalData.userInfo.nickName;
     }
-    console.log(app.globalData.userInfo)
-
-
-    var newisAllTypes = []
-    this.data.destinations.forEach(function (item) {
-
-      var o = new Object()
-      o.checked = true;
-      o.value = item;
-      o.name = item;
-      o.disabled = false;
-      newisAllTypes.push(o)
-
-    })
-    this.setData({ "newisAllTypes": newisAllTypes });
-
+    
     this.setData({
       gender: app.globalData.userInfo ? app.globalData.userInfo.gender : "",
       name: name,
@@ -224,5 +251,26 @@ Page({
       endIndex: wx.getStorageSync("startIndex") == 0 ? wx.getStorageSync("last_endIndex"):0,
       vehicle: app.globalData.userInfo ?app.globalData.userInfo.vehicle:""
     })
+
+
+    var newisAllTypes = []
+    this.data.destinations.forEach(function (item) {
+
+
+      var o = new Object()
+      if (item == that.data.destinations[that.data.startIndex] || item == that.data.destinations[that.data.endIndex]) {
+        o.checked = true;
+        o.disabled = true;
+      } else {
+      
+        o.checked = true;
+        o.disabled = false;
+      }
+      o.value = item;
+      o.name = item;
+      newisAllTypes.push(o)
+
+    })
+    this.setData({ "newisAllTypes": newisAllTypes });
   }
 })

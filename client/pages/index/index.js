@@ -99,9 +99,7 @@ Page({
     util.req('info/lists',
       {start:start,over:over,date:date,page:page},
       function(data){
-      
-
-
+    
 
         if(page == 1){          
           list = new Array();
@@ -111,21 +109,10 @@ Page({
 
         if (!data.list) {
           that.setData({ nomore: true });
-          // return false;
         } else{
           var surp = new Array('', '空位', '人');
+        
           data.list.forEach(function (item) {
-            // try{
-            //   var start = ((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
-            // }catch(e){
-            //   var start = (item.departure).split(/[县区]/)[0];
-            // }
-
-            // try {
-            //   var over = ((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
-            // } catch (e) {
-            //   var over = (item.destination).split(/[县区]/)[0];
-            // }
 
             if (item.isAllTypes == 1) {
               item.isAllTypesMsg = "各个小区接送"
@@ -153,6 +140,7 @@ Page({
               tm: util.getDateDiff(item.time * 1000)
             };
             list.push(obj);
+
             // if(item.type == 1){
             //   list1.push(obj);
             // }else{
@@ -162,6 +150,7 @@ Page({
         }
 
         that.setData({list:list,list1:list1,list2:list2});
+        that.setData({ nomore: true });
     })
 
   },
