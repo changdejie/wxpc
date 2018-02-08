@@ -67,7 +67,7 @@ class InfoController extends Controller {
 		}
 		
 		if($over == '潞城'){
-			$where .= ' and info.destination like "%'.$over.'%"';
+			$where .= ' and info.destination like "%'.$over.'%"'.' and  (( info.isAllTypes = 1) or (info.isAllTypes=2  and info.isAllTypesValues not like '.'"%'.$start.'%" '.' or (info.isAllTypes=3 and info.isAllTypesValues  like '.'"%'.$start.'%"'.'))) ' ;
 		}
 		$page = I('page','1');
 		$page_count = 20;
@@ -88,6 +88,7 @@ class InfoController extends Controller {
 		$user = $u->getUserInfo(vaild_sk(I('sk')));
 		$i = D('Info');
 		$where['uid'] = $user['id'];
+		$where['status'] = 1;
 		$data = $i->where($where)->count();
 		$result['status'] = 1;
 		$result['msg'] = '获取成功';
@@ -99,10 +100,11 @@ class InfoController extends Controller {
 		$user = $u->getUserInfo(vaild_sk(I('sk')));
 		$i = D('Info');
 		$where['uid'] = $user['id'];
+		$where['status'] = 1;
 		$page = I('page','1');
 		$page_count = 20;
 		$limit = ($page-1)*$page_count;
-		$data = $i->where($where)->limit($limit,$page_count)->order('addtime desc')->select();
+		$data = $i->where($where)->limit($limit,$page_count)->order('id desc')->select();
 		$result['status'] = 1;
 		$result['msg'] = '获取成功';
 		$result['data'] = $data;
@@ -116,6 +118,9 @@ class InfoController extends Controller {
 		$where['uid'] = $user['id'];
 		$where['id'] = I('id');
 		if($i->where($where)->delete() > 0){
+			$a = D('Appointment');
+			$newwhere['iid'] = I('id');
+			$a->where($newwhere)->delete();
 			$result['status'] = 1;
 			$result['msg'] = '删除成功';
 		}else{
@@ -124,4 +129,19 @@ class InfoController extends Controller {
 		}
 		exit(json_encode($result));
 	}
+
+        public function disabled(){
+                $u = M('Info');
+                $data['status'] = 0;
+                $id = I('id');
+                if($u->where('id='.$id)->save($data) > 0){
+                        $result['status'] = 1;
+                        $result['msg'] = '操作成功';
+                }else{
+                        $result['status'] = 0;
+                        $result['msg'] = '操作失败';
+                }
+                exit(json_encode($result));
+        }
+
 }

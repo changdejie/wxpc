@@ -19,7 +19,6 @@ class MsgController extends Controller {
 		if(!$str){
 		    $str=$str.'-1';
 		}
-	
 		$str = 'id in ('.$str.')';
 		M('msg')->where($str)->save($see);
 		$result['status'] = 1;
